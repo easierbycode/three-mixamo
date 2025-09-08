@@ -48,11 +48,16 @@
 
 	//character (FBX - Unity or Blender export)
 	const fbxLoader = new FBXLoader();
+
+	fbxLoader.load( './character2.fbx', function (fbx2) {
+
 	fbxLoader.load( './character.fbx', function (fbx) {
 	character = fbx;
+	fbx.animations[0] = fbx2.animations[0];//idle
 	mixer = new THREE.AnimationMixer( character );
-	// mixer.clipAction(THREE.AnimationUtils.subclip( fbx.animations[ 0 ], 'idle', 0, 221)).setDuration( 6 ).play();//0
+	mixer.clipAction(THREE.AnimationUtils.subclip( fbx.animations[ 0 ], 'idle', 0, 221)).setDuration( 6 ).play();//0
 	// mixer.clipAction(THREE.AnimationUtils.subclip( fbx.animations[ 0 ], 'run', 222, 244)).setDuration( 0.7 ).play();//1
+	mixer._actions[0].enabled = true;
 	character.children[0].visible=true;
 	character.children[1].visible=true;
 	character.children[2].visible=false;
@@ -61,7 +66,9 @@
 	character.children[5].visible=true;
 
 	scene.add( character );
-	});//end loader
+	});//end character loader
+
+	});//end character2 loader
 	
 	//render
 	renderer.setAnimationLoop( render );	
